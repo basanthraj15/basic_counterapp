@@ -67,6 +67,7 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               context.read<CounterBloc>().add(Decrement());
             },
+            tooltip: 'Decrement',
             child: const Icon(
               Icons.remove,
               color: Colors.black,
