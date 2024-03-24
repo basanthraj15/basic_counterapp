@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:counter_app/counter/counter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: const MyHomePage(title: 'COUNTER'),
+        home: const MyHomePage(title: ' BASIC COUNTER WITH BLOC'),
       ),
     );
   }
@@ -44,26 +46,45 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'COUNT',
             ),
-            /* Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ), */
+            BlocBuilder<CounterBloc, CounterState>(
+              builder: (context, state) {
+                log('BlocBuilder() => called');
+                return Text(
+                  '${state.count}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              },
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          context.read<CounterBloc>().add(Increment());
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              context.read<CounterBloc>().add(Decrement());
+            },
+            child: const Icon(
+              Icons.remove,
+              color: Colors.black,
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              context.read<CounterBloc>().add(Increment());
 
-          //BlocProvider.of<CounterBloc>(context).add(Increment());
-        },
-        tooltip: 'Increment',
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+              //BlocProvider.of<CounterBloc>(context).add(Increment());
+            },
+            tooltip: 'Increment',
+            child: const Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
     );
   }
